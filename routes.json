@@ -1,0 +1,367 @@
+[
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "GET",
+    "url": "/msg"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "GET",
+    "url": "/date"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "GET",
+    "url": "/users"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "POST",
+    "url": "/users"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "GET",
+    "url": "/users/get/by_role/{role_id}"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "GET",
+    "url": "/users/get/by_email/{email}"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "GET",
+    "url": "/users/get/by_id/{id}"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "POST",
+    "url": "/users/update/{id}"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "POST",
+    "url": "/users/delete/{id}"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "POST",
+    "url": "/auth/login"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "POST",
+    "url": "/auth/register"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "GET",
+    "url": "/task"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "POST",
+    "url": "/task"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "GET",
+    "url": "/task/{id}"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "GET",
+    "url": "/task/priorities"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "GET",
+    "url": "/task/afforts"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "POST",
+    "url": "/task/update/{id}"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "POST",
+    "url": "/task/delete/{id}"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "POST",
+    "url": "/task/{task_id}/add-user/{user_id}"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "POST",
+    "url": "/task/create/afford"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "POST",
+    "url": "/task/create/priority"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "POST",
+    "url": "/task/update/priority/{id}"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "POST",
+    "url": "/task/delete/priority/{id}"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "POST",
+    "url": "/task/update/afford/{id}"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "POST",
+    "url": "/task/delete/afford/{id}"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "GET",
+    "url": "/project"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "POST",
+    "url": "/project"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "GET",
+    "url": "/project/{id}"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "POST",
+    "url": "/project/update/{id}"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "POST",
+    "url": "/project/delete/{id}"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "POST",
+    "url": "/project/{project_id}/add-user/{user_id}"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "POST",
+    "url": "/project/add-task/{project_id}/{task_id}"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "GET",
+    "url": "/branch"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "GET",
+    "url": "/branch/{id}"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "GET",
+    "url": "/branch/tree"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "GET",
+    "url": "/branch/users"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "GET",
+    "url": "/branch/subbranches"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "POST",
+    "url": "/branch/create"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "POST",
+    "url": "/branch/update/{id}"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "POST",
+    "url": "/branch/delete/{id}"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "POST",
+    "url": "/branch/remove-sub-branch/{id}"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "POST",
+    "url": "/branch/{branch_id}/add-user/{user_id}"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "POST",
+    "url": "/branch/remove/user/{id}"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "GET",
+    "url": "/permission"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "POST",
+    "url": "/permission"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "GET",
+    "url": "/permission/{id}"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "POST",
+    "url": "/permission/update/{id}"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "POST",
+    "url": "/permission/remove/{id}"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "GET",
+    "url": "/api/{id}"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "GET",
+    "url": "/sprint"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "POST",
+    "url": "/sprint"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "GET",
+    "url": "/sprint/{id}"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "GET",
+    "url": "/sprint/retro/get/all/retros/list"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "GET",
+    "url": "/sprint/status/all"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "GET",
+    "url": "/sprint/retro/get/all/retros"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "POST",
+    "url": "/sprint/status/create"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "POST",
+    "url": "/sprint/update/{id}"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "POST",
+    "url": "/sprint/status/update/{id}"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "POST",
+    "url": "/sprint/delete/{id}"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "POST",
+    "url": "/sprint/status/delete/{id}"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "POST",
+    "url": "/sprint/sprint/add/retro_table"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "POST",
+    "url": "/sprint/task/add/retro/if_time_passed"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "POST",
+    "url": "/sprint/retro/remove/{id}"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "GET",
+    "url": "/department/departments"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "POST",
+    "url": "/department/update/department/{id}"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "POST",
+    "url": "/department/delete/department/{id}"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "POST",
+    "url": "/department/create/department/{id}"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "POST",
+    "url": "/roles"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "GET",
+    "url": "/roles"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "GET",
+    "url": "/roles/getbyid/{id}"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "GET",
+    "url": "/roles/getbyname/{name}"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "POST",
+    "url": "/roles/update/{id}"
+  },
+  {
+    "apiInfo": "Users Example",
+    "httpMethod": "POST",
+    "url": "/roles/delete/{id}"
+  }
+]

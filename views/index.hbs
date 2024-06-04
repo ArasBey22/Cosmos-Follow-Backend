@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat Application</title>
+  <script src="/socket.io/socket.io.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: #f0f0f0;
+      margin: 0;
+      padding: 0;
+    }
+    h1 {
+      color: #333;
+    }
+    .container {
+      display: flex;
+      width: 90%;
+      max-width: 1200px;
+      margin: 20px 0;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+    .half {
+      width: 50%;
+      padding: 20px;
+      box-sizing: border-box;
+      border-right: 1px solid #ddd;
+    }
+    .half:last-child {
+      border-right: none;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: #555;
+    }
+    input[type="text"] {
+      width: calc(100% - 22px);
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #007BFF;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    #messages, #directMessages {
+      margin-top: 20px;
+      max-height: 300px;
+      overflow-y: auto;
+      border-top: 1px solid #ddd;
+      padding-top: 10px;
+    }
+    p {
+      margin: 5px 0;
+      padding: 10px;
+      background-color: #f9f9f9;
+      border-radius: 4px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+<body>
+  <h1>Chat Application</h1>
+  <div class="container">
+    <div class="half">
+      <h2>Direct Messaging</h2>
+      <div>
+        <label for="userEmail">Your Email:</label>
+        <input type="text" id="userEmail" placeholder="Enter your email">
+      </div>
+      <div>
+        <label for="recipientEmail">Recipient's Email:</label>
+        <input type="text" id="recipientEmail" placeholder="Enter recipient's email">
+      </div>
+      <div>
+        <label for="directMessage">Message:</label>
+        <input type="text" id="directMessage" placeholder="Enter your message">
+        <button id="sendDirectBtn">Send Message</button>
+      </div>
+      <div id="directMessages">
+        <h2>Direct Messages</h2>
+      </div>
+    </div>
+    <div class="half">
+      <h2>Room Chat</h2>
+      <div>
+        <label for="email">Email:</label>
+        <input type="text" id="email" placeholder="Enter your email">
+      </div>
+      <div>
+        <label for="room">Room:</label>
+        <input type="text" id="room" placeholder="Enter room name">
+        <button id="joinBtn">Join Room</button>
+        <button id="leaveBtn">Leave Room</button>
+      </div>
+      <div>
+        <label for="message">Message:</label>
+        <input type="text" id="message" placeholder="Enter your message">
+        <button id="sendBtn">Send Message</button>
+      </div>
+      <div id="messages">
+        <h2>Messages</h2>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const socket = io('/chat');
+
+    const userEmailInput = document.getElementById('userEmail');
+    const recipientEmailInput = document.getElementById('recipientEmail');
+    const directMessageInput = document.getElementById('directMessage');
+    const directMessagesDiv = document.getElementById('directMessages');
+
+    const emailInput = document.getElementById('email');
+    const roomInput = document.getElementById('room');
+    const messageInput = document.getElementById('message');
+    const messagesDiv = document.getElementById('messages');
+
+    const joinedRooms = new Set();
+
+    document.getElementById('sendDirectBtn').onclick = () => {
+      const userEmail = userEmailInput.value;
+      const recipientEmail = recipientEmailInput.value;
+      const message = directMessageInput.value;
+      if (userEmail && recipientEmail && message) {
+        socket.emit('directMessage', { sender: userEmail, recipient: recipientEmail, message });
+      }
+    };
+
+    socket.on('directMessageToClient', (message) => {
+      const p = document.createElement('p');
+      p.textContent = `${message.sender}: ${message.message}`;
+      directMessagesDiv.appendChild(p);
+    });
+
+    document.getElementById('joinBtn').onclick = () => {
+      const email = emailInput.value;
+      const room = roomInput.value;
+      if (email && room) {
+        socket.emit('joinRoom', { email, room });
+      }
+    };
+
+    document.getElementById('leaveBtn').onclick = () => {
+      const email = emailInput.value;
+      const room = roomInput.value;
+      if (email && room) {
+        socket.emit('leaveRoom', { email, room });
+        joinedRooms.delete(room); // Remove room from joinedRooms when leaving
+      }
+    };
+
+    document.getElementById('sendBtn').onclick = () => {
+      const email = emailInput.value;
+      const room = roomInput.value;
+      const message = messageInput.value;
+      if (email && room && message) {
+        socket.emit('chatToServer', { sender: email, room, message });
+      }
+    };
+
+    socket.on('chatToClient', (message) => {
+      const p = document.createElement('p');
+      p.textContent = `${message.sender}: ${message.message}`;
+      messagesDiv.appendChild(p);
+    });
+
+    socket.on('joinedRoom', (data) => {
+      const p = document.createElement('p');
+      p.textContent = `${data.email} joined ${data.room}`;
+      messagesDiv.appendChild(p);
+      joinedRooms.add(data.room); // Add room to joinedRooms when successfully joined
+    });
+
+    socket.on('leftRoom', (data) => {
+      const p = document.createElement('p');
+      p.textContent = `${data.email} left ${data.room}`;
+      messagesDiv.appendChild(p);
+      joinedRooms.delete(data.room); // Remove room from joinedRooms when left
+    });
+
+    socket.on('alreadyJoinedRoom', (data) => {
+      if (!joinedRooms.has(data.room)) {
+        const p = document.createElement('p');
+        p.textContent = `You have already joined ${data.room}`;
+        messagesDiv.appendChild(p);
+        joinedRooms.add(data.room); // Ensure message is shown only once
+      }
+    });
+
+    socket.on('error', (data) => {
+      const p = document.createElement('p');
+      p.textContent = `Error: ${data.message}`;
+      messagesDiv.appendChild(p);
+    });
+  </script>
+</body>
+</html>
