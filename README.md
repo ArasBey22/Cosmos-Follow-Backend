@@ -1,73 +1,251 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# 🌌 Cosmos Follow Backend
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+**Cosmos Follow Backend**, dallar (branch), görevler, kullanıcılar ve projeler gibi iş birliği yapılarının yönetilebildiği, profesyonel bir backend uygulamasıdır. Kullanıcılar dallara atanabilir, görevler oluşturulabilir ve gerçek zamanlı sohbet yapılabilir. Proje, JWT, Google Calendar API, Socket.IO gibi modern teknolojilerle entegredir.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+---
 
-## Description
+## 📌 Proje Özeti
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- Kullanıcı yönetimi ve kimlik doğrulama
+- Branch (dal) oluşturma ve kullanıcı ilişkilendirme
+- CRUD işlemleri (create, read, update, delete)
+- Swagger ile otomatik API dokümantasyonu
+- JWT tabanlı token doğrulama
+- Socket.IO ile gerçek zamanlı iletişim
+- Google Calendar API entegrasyonu
 
-## Installation
+---
 
-```bash
-$ npm install
+## 🧰 Teknolojiler
+
+- **Node.js & NestJS**
+- **MySQL (XAMPP)**
+- **TypeORM**
+- **Swagger**
+- **JWT**
+- **Socket.IO**
+- **Google Calendar API**
+
+---
+
+## 🔐 Kimlik Doğrulama ve Kayıt
+
+### 🔹 Kullanıcı Kayıt Olma
+
+```ts
+@Post('register')
+register(@Body() registerDto: RegisterDto)
 ```
 
-## Running the app
+**Request:**
 
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+```json
+{
+  "name": "Emir Aras",
+  "email": "emir@example.com",
+  "password": "securePassword"
+}
 ```
 
-## Test
+**Response:**
 
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+```json
+{
+  "message": "Kayıt başarılı."
+}
 ```
 
-## Support
+---
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### 🔹 Kullanıcı Giriş Yapma (Login)
 
-## Stay in touch
+```ts
+@Post('login')
+login(@Body() loginDto: LoginDto)
+```
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+**Response:**
 
-## License
+```json
+{
+  "access_token": "eyJhbGciOiJIUzI1..."
+}
+```
 
-Nest is [MIT licensed](LICENSE).
+> Tüm korumalı endpoint’lere erişmek için bu token `Authorization: Bearer <token>` olarak gönderilmelidir.
+
+---
+
+## 🧑‍💼 Branch İşlemleri
+
+### 🔸 Kullanıcıyı Dala Ekleme
+
+> Bu işlem "takip" değil, bir kullanıcının organizasyonel bir birime (branch) eklenmesini sağlar.
+
+```ts
+@Post(':branch_id/add-user/:user_id')
+addUsersToBranch(@Param('branch_id') id: number, @Param('user_id') userId: number)
+```
+
+---
+
+### 🔸 Kullanıcıyı Daldan Çıkarma
+
+```ts
+@Post('remove/user/:id')
+removeUserFromBranch(@Param('id') id: number)
+```
+
+---
+
+### 🔸 Tüm Dalları Getir
+
+```ts
+@Get('tree')
+getAllBranchesAsTree()
+```
+
+---
+
+### 🔸 Tüm Kullanıcıları Getir
+
+```ts
+@Get('users')
+findAllBranchUsers()
+```
+
+---
+
+## 📄 CRUD Örnekleri
+
+```ts
+@Post('create')
+createBranch(@Body() dto: CreateBranchDto)
+
+@Post('update/:id')
+updateBranch(@Param('id') id: number, @Body() dto: UpdateBranchDto)
+
+@Post('delete/:id')
+removeBranch(@Param('id') id: number)
+```
+
+---
+
+## 🧱 Entity Örnekleri
+
+### 🔸 User Entity
+
+```ts
+@Entity()
+export class User {
+  @PrimaryGeneratedColumn() id: number;
+  @Column() name: string;
+  @Column() email: string;
+  @Column() password: string;
+}
+```
+
+### 🔸 Branch Entity
+
+```ts
+@Entity()
+export class Branch {
+  @PrimaryGeneratedColumn() id: number;
+  @Column() title: string;
+  @ManyToMany(() => User, user => user.branches)
+  users: User[];
+}
+```
+
+---
+
+## 📡 Socket.IO
+
+Sohbet odalarında gerçek zamanlı mesajlaşma:
+
+```ts
+@SubscribeMessage('sendMessage')
+handleMessage(@MessageBody() msg: MessageDto, @ConnectedSocket() client: Socket)
+```
+
+---
+
+## 📅 Google Calendar API
+
+Google hesabı ile yetkilendirme sonrası etkinlikleri alma işlemleri yapılır:
+
+```ts
+@Get('calendar/events')
+getCalendarEvents()
+```
+
+---
+
+## 🧪 Swagger API Belgelendirme
+
+Tüm endpoint’ler otomatik belgelenmiştir:
+
+🧭 Swagger arayüzü:  
+```bash
+http://localhost:3000/api
+```
+
+---
+
+## 🚀 Kurulum
+
+### 1. Reponun Klonlanması
+
+```bash
+git clone https://github.com/ArasBey22/Cosmos-Follow-Backend.git
+cd Cosmos-Follow-Backend
+```
+
+### 2. Bağımlılıkların Kurulması
+
+```bash
+npm install
+```
+
+### 3. .env Dosyası
+
+```
+PORT=3000
+DB_HOST=localhost
+DB_PORT=3306
+DB_USER=root
+DB_PASSWORD=
+DB_NAME=cosmos_db
+JWT_SECRET=secretKey
+```
+
+### 4. XAMPP Üzerinde Veritabanı Oluştur
+
+- `localhost/phpmyadmin` > Yeni Veritabanı: `cosmos_db`
+- TypeORM otomatik olarak tabloları oluşturur (`synchronize: true`)
+
+### 5. Uygulamayı Başlat
+
+```bash
+npm run start:dev
+```
+
+---
+
+## 🧪 Test ve Postman
+
+- Token bazlı giriş sonrası tüm işlemler test edildi.
+- Postman koleksiyonları ile CRUD, kullanıcı yönetimi, calendar, socket işlemleri doğrulandı.
+
+---
+
+## 👨‍💻 Geliştirici
+
+**Himmet Emir Aras**  
+📍 Türkiye  
+📧 emiraras765@gmail.com  
+🔗 [github.com/ArasBey22](https://github.com/ArasBey22)
+
+---
+
+> Bu proje, profesyonel geliştirme deneyimi edinmek amacıyla bireysel olarak geliştirilmiş, JWT, Socket.IO, TypeORM ve Google API gibi birçok teknolojiyi bir araya getiren tam kapsamlı bir back-end uygulamasıdır.
