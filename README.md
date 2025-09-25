@@ -1,45 +1,36 @@
-# 🌌 Cosmos Follow Backend
+# Cosmos Follow Backend
 
-**Cosmos Follow Backend**, dallar (branch), görevler, kullanıcılar ve projeler gibi iş birliği yapılarının yönetilebildiği, profesyonel bir backend uygulamasıdır. Kullanıcılar dallara atanabilir, görevler oluşturulabilir ve gerçek zamanlı sohbet yapılabilir. Proje, JWT, Google Calendar API, Socket.IO gibi modern teknolojilerle entegredir.
+Profesyonel bir backend API projesi. Kullanıcı yönetimi, görev takibi, gerçek zamanlı sohbet ve Google Calendar entegrasyonu içerir.
 
 ---
 
-## 📌 Proje Özeti
+## 🎯 Özellikler
 
-- Kullanıcı yönetimi ve kimlik doğrulama
-- Branch (dal) oluşturma ve kullanıcı ilişkilendirme
-- CRUD işlemleri (create, read, update, delete)
-- Swagger ile otomatik API dokümantasyonu
-- JWT tabanlı token doğrulama
-- Socket.IO ile gerçek zamanlı iletişim
+- Kullanıcı kayıt/giriş sistemi
+- JWT tabanlı kimlik doğrulama
+- CRUD işlemleri
+- Gerçek zamanlı mesajlaşma
 - Google Calendar API entegrasyonu
+- Swagger API dokümantasyonu
 
 ---
 
-## 🧰 Teknolojiler
+## 🛠 Teknolojiler
 
 - **Node.js & NestJS**
-- **MySQL (XAMPP)**
-- **TypeORM**
-- **Swagger**
-- **JWT**
+- **MySQL & TypeORM**
+- **JWT Authentication**
 - **Socket.IO**
+- **Swagger**
 - **Google Calendar API**
 
 ---
 
-## 🔐 Kimlik Doğrulama ve Kayıt
+## 🔐 Kimlik Doğrulama
 
-### 🔹 Kullanıcı Kayıt Olma
-
-```ts
-@Post('register')
-register(@Body() registerDto: RegisterDto)
-```
-
-**Request:**
-
+### Kayıt Olma
 ```json
+POST /auth/register
 {
   "name": "Emir Aras",
   "email": "emir@example.com",
@@ -47,169 +38,89 @@ register(@Body() registerDto: RegisterDto)
 }
 ```
 
-**Response:**
-
+### Giriş Yapma
 ```json
+POST /auth/login
 {
-  "message": "Kayıt başarılı."
+  "email": "emir@example.com",
+  "password": "securePassword"
 }
-```
 
----
-
-### 🔹 Kullanıcı Giriş Yapma (Login)
-
-```ts
-@Post('login')
-login(@Body() loginDto: LoginDto)
-```
-
-**Response:**
-
-```json
+Response:
 {
   "access_token": "eyJhbGciOiJIUzI1..."
 }
 ```
 
-> Tüm korumalı endpoint’lere erişmek için bu token `Authorization: Bearer <token>` olarak gönderilmelidir.
-
 ---
 
-## 🧑‍💼 Branch İşlemleri
+## 📊 CRUD İşlemleri
 
-### 🔸 Kullanıcıyı Dala Ekleme
+Kullanıcılar, projeler ve görevler için tam CRUD desteği:
 
-> Bu işlem "takip" değil, bir kullanıcının organizasyonel bir birime (branch) eklenmesini sağlar.
-
-```ts
-@Post(':branch_id/add-user/:user_id')
-addUsersToBranch(@Param('branch_id') id: number, @Param('user_id') userId: number)
-```
-
----
-
-### 🔸 Kullanıcıyı Daldan Çıkarma
-
-```ts
-@Post('remove/user/:id')
-removeUserFromBranch(@Param('id') id: number)
-```
-
----
-
-### 🔸 Tüm Dalları Getir
-
-```ts
-@Get('tree')
-getAllBranchesAsTree()
-```
-
----
-
-### 🔸 Tüm Kullanıcıları Getir
-
-```ts
-@Get('users')
-findAllBranchUsers()
-```
-
----
-
-## 📄 CRUD Örnekleri
-
-```ts
+```typescript
+// Create
 @Post('create')
-createBranch(@Body() dto: CreateBranchDto)
+create(@Body() createDto: CreateDto)
 
-@Post('update/:id')
-updateBranch(@Param('id') id: number, @Body() dto: UpdateBranchDto)
+// Read
+@Get()
+findAll()
 
-@Post('delete/:id')
-removeBranch(@Param('id') id: number)
+// Update
+@Put(':id')
+update(@Param('id') id: number, @Body() updateDto: UpdateDto)
+
+// Delete
+@Delete(':id')
+remove(@Param('id') id: number)
 ```
 
 ---
 
-## 🧱 Entity Örnekleri
+## 💬 Gerçek Zamanlı Sohbet
 
-### 🔸 User Entity
+Socket.IO ile anlık mesajlaşma:
 
-```ts
-@Entity()
-export class User {
-  @PrimaryGeneratedColumn() id: number;
-  @Column() name: string;
-  @Column() email: string;
-  @Column() password: string;
-}
-```
-
-### 🔸 Branch Entity
-
-```ts
-@Entity()
-export class Branch {
-  @PrimaryGeneratedColumn() id: number;
-  @Column() title: string;
-  @ManyToMany(() => User, user => user.branches)
-  users: User[];
-}
-```
-
----
-
-## 📡 Socket.IO
-
-Sohbet odalarında gerçek zamanlı mesajlaşma:
-
-```ts
+```typescript
 @SubscribeMessage('sendMessage')
-handleMessage(@MessageBody() msg: MessageDto, @ConnectedSocket() client: Socket)
+handleMessage(@MessageBody() message: string, @ConnectedSocket() client: Socket)
 ```
 
 ---
 
-## 📅 Google Calendar API
+## 📅 Google Calendar Entegrasyonu
 
-Google hesabı ile yetkilendirme sonrası etkinlikleri alma işlemleri yapılır:
+Google hesabı ile etkinlik yönetimi:
 
-```ts
+```typescript
 @Get('calendar/events')
 getCalendarEvents()
 ```
 
 ---
 
-## 🧪 Swagger API Belgelendirme
+## 📚 API Dokümantasyonu
 
-Tüm endpoint’ler otomatik belgelenmiştir:
-
-🧭 Swagger arayüzü:  
-```bash
-http://localhost:3000/api
-```
+Swagger UI: `http://localhost:3000/api`
 
 ---
 
 ## 🚀 Kurulum
 
-### 1. Reponun Klonlanması
-
+1. **Repo'yu klonlayın**
 ```bash
 git clone https://github.com/ArasBey22/Cosmos-Follow-Backend.git
 cd Cosmos-Follow-Backend
 ```
 
-### 2. Bağımlılıkların Kurulması
-
+2. **Bağımlılıkları kurun**
 ```bash
 npm install
 ```
 
-### 3. .env Dosyası
-
-```
+3. **Environment dosyası oluşturun (.env)**
+```env
 PORT=3000
 DB_HOST=localhost
 DB_PORT=3306
@@ -219,33 +130,33 @@ DB_NAME=cosmos_db
 JWT_SECRET=secretKey
 ```
 
-### 4. XAMPP Üzerinde Veritabanı Oluştur
+4. **Veritabanını hazırlayın**
+- XAMPP'ı başlatın
+- `localhost/phpmyadmin` > `cosmos_db` adında veritabanı oluşturun
 
-- `localhost/phpmyadmin` > Yeni Veritabanı: `cosmos_db`
-- TypeORM otomatik olarak tabloları oluşturur (`synchronize: true`)
-
-### 5. Uygulamayı Başlat
-
+5. **Uygulamayı başlatın**
 ```bash
 npm run start:dev
 ```
 
 ---
 
-## 🧪 Test ve Postman
+## 🧪 Test
 
-- Token bazlı giriş sonrası tüm işlemler test edildi.
-- Postman koleksiyonları ile CRUD, kullanıcı yönetimi, calendar, socket işlemleri doğrulandı.
+Postman koleksiyonları ile tüm endpoint'ler test edilmiştir:
+- Authentication işlemleri
+- CRUD operasyonları  
+- Socket.IO mesajlaşma
+- Google Calendar API
 
 ---
 
 ## 👨‍💻 Geliştirici
 
 **Himmet Emir Aras**  
-📍 Türkiye  
 📧 emiraras765@gmail.com  
 🔗 [github.com/ArasBey22](https://github.com/ArasBey22)
 
 ---
 
-> Bu proje, profesyonel geliştirme deneyimi edinmek amacıyla bireysel olarak geliştirilmiş, JWT, Socket.IO, TypeORM ve Google API gibi birçok teknolojiyi bir araya getiren tam kapsamlı bir back-end uygulamasıdır.
+*Modern backend teknolojilerini öğrenmek ve pratik deneyim kazanmak amacıyla geliştirilmiş tam kapsamlı bir API projesidir.*
